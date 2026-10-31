@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gijs van der Wilt, in herinnering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;0,7..72,700;1,7..72,400&family=Barlow+Semi+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F1F3F0;
+  --paper-2:#E4E8E3;
+  --ink:#1E2528;
+  --ink-soft:#4C575B;
+  --peat:#3A2A1F;
+  --peat-2:#5B4433;
+  --water:#2E5664;
+  --water-soft:#D5E1E3;
+  --reed:#7F8653;
+  --line:#C9D0CB;
+  --c-lokaal:#2E6B78;
+  --c-vorst:#6E4F86;
+  --c-oorlog:#9C3D32;
+  --c-samen:#8A6A2C;
+  --c-techniek:#3F5F86;
+  --c-lucht:#4F8DB3;
+  --c-oranje:#D9661A;
+  --serif:"Literata", Georgia, "Times New Roman", serif;
+  --cond:"Barlow Semi Condensed", "Arial Narrow", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#161B1D; --paper-2:#20272A; --ink:#E6E9E6; --ink-soft:#A9B3B3;
+    --water-soft:#1F3238; --line:#334045;
+    --c-lokaal:#6FB0BD; --c-vorst:#B596CC; --c-oorlog:#E0857A; --c-samen:#D3B06A;
+    --c-techniek:#8FAEDB; --c-lucht:#8CC4E4; --c-oranje:#F2944F;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#161B1D; --paper-2:#20272A; --ink:#E6E9E6; --ink-soft:#A9B3B3;
+  --water-soft:#1F3238; --line:#334045;
+  --c-lokaal:#6FB0BD; --c-vorst:#B596CC; --c-oorlog:#E0857A; --c-samen:#D3B06A;
+  --c-techniek:#8FAEDB; --c-lucht:#8CC4E4; --c-oranje:#F2944F;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:17px;line-height:1.6}
+a{color:var(--water)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) a{color:#8CC4D4}}
+:focus-visible{outline:3px solid var(--c-oranje);outline-offset:2px}
+
+/* ---------- Hero: het veenprofiel ---------- */
+.hero{background:var(--peat);color:#EEE7DF;padding:56px 16px 40px}
+.hero-inner{max-width:1180px;margin:0 auto}
+.hero h1{font-weight:400;font-size:clamp(2rem,5vw,3.4rem);line-height:1.1;margin:0 0 .2em;letter-spacing:-.01em}
+.hero .dates{font-family:var(--cond);font-weight:600;font-size:1.25rem;color:#C9B9A6;margin:0 0 1.4em}
+.hero .lede{max-width:62ch;font-size:1.06rem;color:#E2D9CF;margin:0 0 2em}
+.hero .by{font-size:.92rem;color:#B6A48F;margin-top:1.4em}
+.strata{width:100%;display:block;overflow:visible}
+.strata .bar{cursor:pointer}
+.strata .bar rect{transition:filter .15s}
+.strata .bar:hover rect,.strata .bar:focus rect{filter:brightness(1.25)}
+.strata text{font-family:var(--cond);fill:#F3ECE4}
+.strata .axis text{fill:#B6A48F;font-size:12px}
+.strata .axis line{stroke:#6E5846}
+@media (max-width: 600px){.strata .bar text{font-size:26px}.strata .axis text{font-size:22px}}
+.strata-note{font-family:var(--cond);font-size:.95rem;color:#B6A48F;margin-top:8px}
+
+/* ---------- Filterbalk ---------- */
+.filters{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:1px solid var(--line)}
+.filters-inner{max-width:1180px;margin:0 auto;padding:10px 16px;display:flex;gap:8px;align-items:center;overflow-x:auto;scrollbar-width:thin}
+.filters .lbl{font-family:var(--cond);font-weight:600;color:var(--ink-soft);white-space:nowrap;margin-right:4px}
+.chip{font-family:var(--cond);font-weight:600;font-size:.95rem;border:1.5px solid var(--cc,var(--ink-soft));color:var(--ink);background:transparent;border-radius:999px;padding:3px 12px 3px 10px;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+.chip::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--cc)}
+.chip[aria-pressed="false"]{opacity:.45;border-style:dashed}
+.chip[aria-pressed="false"]::before{background:transparent;border:1.5px solid var(--cc)}
+
+/* ---------- Hoofdstukken ---------- */
+main{max-width:1180px;margin:0 auto;padding:0 16px 80px}
+.colheads{display:grid;grid-template-columns:minmax(260px,36%) 1fr;gap:40px;padding:28px 0 0;font-family:var(--cond);font-weight:600;color:var(--ink-soft);font-size:1.05rem}
+.chapter{padding:44px 0 8px;border-bottom:1px solid var(--line)}
+.ch-head{margin-bottom:22px}
+.ch-years{font-family:var(--cond);font-weight:700;font-size:1.05rem;color:var(--water)}
+.ch-head h2{font-weight:600;font-size:clamp(1.45rem,3vw,2rem);line-height:1.2;margin:.1em 0 .35em}
+.ch-intro{max-width:72ch;color:var(--ink-soft);margin:0}
+.ch-grid{display:grid;grid-template-columns:minmax(260px,36%) 1fr;gap:40px;align-items:start}
+.gen-col{position:sticky;top:64px;display:flex;flex-direction:column;gap:14px}
+
+.card{background:var(--paper-2);border-left:5px solid var(--peat-2);padding:16px 18px 14px;border-radius:2px}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .card{border-left-color:#9C7B60}}
+.card .gen{font-family:var(--cond);font-weight:600;color:var(--ink-soft);font-size:.95rem}
+.card h3{margin:.1em 0 .4em;font-size:1.22rem;line-height:1.25;font-weight:700}
+.card h3 .alt{display:block;font-weight:400;font-style:italic;font-size:.88rem;color:var(--ink-soft)}
+.facts{margin:0 0 .6em;display:grid;grid-template-columns:auto 1fr;gap:2px 12px;font-size:.93rem}
+.facts dt{font-family:var(--cond);font-weight:600;color:var(--ink-soft)}
+.facts dd{margin:0}
+.card p{margin:.4em 0 0;font-size:.95rem}
+.badge{display:inline-block;font-family:var(--cond);font-weight:600;font-size:.85rem;padding:0 8px;border-radius:3px;background:var(--water-soft);color:var(--ink)}
+.badge.prob{background:#EAD9B8;color:#4A3818}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .badge.prob{background:#4A3E28;color:#F0DFBF}}
+.mini{display:flex;justify-content:space-between;gap:12px;align-items:baseline;padding:8px 12px;border-left:5px solid var(--line);background:transparent;text-decoration:none;color:var(--ink)}
+.mini:hover{background:var(--paper-2)}
+.mini b{font-weight:600}
+.mini span{font-family:var(--cond);font-weight:600;color:var(--ink-soft);white-space:nowrap}
+.memo{font-style:italic;color:var(--ink-soft);padding:6px 0 0}
+
+.side-box{border:1px solid var(--line);padding:12px 14px;font-size:.92rem}
+.side-box h4{font-family:var(--cond);font-weight:700;font-size:1rem;margin:0 0 4px;color:var(--c-vorst)}
+.side-box.sky h4{color:var(--c-lucht)}
+.side-box p{margin:0}
+
+/* tijdlijn rechts */
+.events{list-style:none;margin:0;padding:0;border-left:2px solid var(--line)}
+.ev{position:relative;padding:0 0 18px 22px}
+.ev::before{content:"";position:absolute;left:-7px;top:.45em;width:12px;height:12px;border-radius:50%;background:var(--cc);border:2px solid var(--paper)}
+.ev .yr{font-family:var(--cond);font-weight:700;font-size:1.05rem}
+.ev .cat{font-family:var(--cond);font-weight:600;font-size:.88rem;color:var(--cc);margin-left:8px}
+.ev .txt{margin:.1em 0 0;max-width:68ch}
+.ev .ages{font-family:var(--cond);font-weight:500;font-size:.92rem;color:var(--ink-soft);margin-top:2px}
+.ev .medium{font-family:var(--cond);font-weight:600;font-size:.88rem;display:inline-block;margin-top:4px;padding:0 7px;border:1px solid var(--c-oranje);border-radius:3px;color:var(--ink)}
+.ev.hidden{display:none}
+.empty{color:var(--ink-soft);font-style:italic;display:none}
+
+/* afsluiting */
+.closing{max-width:72ch;padding:48px 0 0}
+.closing h2{font-weight:600;font-size:1.6rem;margin:0 0 .4em}
+.closing li{margin-bottom:.3em}
+footer{max-width:1180px;margin:0 auto;padding:24px 16px 48px;color:var(--ink-soft);font-size:.9rem;border-top:1px solid var(--line)}
+
+@media (max-width: 820px){
+  .colheads{display:none}
+  .ch-grid{grid-template-columns:1fr;gap:22px}
+  .gen-col{position:static}
+  body{font-size:16px}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <h1>Gijsbert Adriaan van der Wilt</h1>
+    <p class="dates">Vinkeveen, 29 juli 1947 tot Vinkeveen, 26 november 2016</p>
+    <p class="lede">Tien jaar geleden overleed mijn vader Gijs. Deze pagina volgt zijn naam terug, van vader op vader, tot in het begin van de achttiende eeuw. Negen generaties woonden binnen zo'n vijftien kilometer van elkaar, in het veen tussen Tienhoven en Vinkeveen. Bijna tweehonderd jaar lang staken en baggerden ze turf, het werk waardoor de plassen ontstonden. Links staan de voorvaders, rechts wat er in de wereld om hen heen gebeurde.</p>
+    <svg class="strata" id="strata" role="img" aria-label="Levenslijnen van negen generaties van der Wilt, van ongeveer 1690 tot 2016"></svg>
+    <p class="strata-note">Elke laag is een leven. Hoe dieper de laag, hoe verder terug. Klik op een naam om naar zijn verhaal te gaan.</p>
+    <p class="by">Samengesteld door zijn zoon Gerton (1969), in 2026.</p>
+  </div>
+</header>
+
+<nav class="filters" aria-label="Soorten gebeurtenissen tonen of verbergen">
+  <div class="filters-inner" id="filters"><span class="lbl">Toon:</span></div>
+</nav>
+
+<main id="main">
+  <div class="colheads" aria-hidden="true"><div>Voorvaders</div><div>De wereld om hen heen</div></div>
+</main>
+
+<footer>
+  <p>Gegevens over de voorvaders komen uit de familiestamboom (MyHeritage) en zijn gecontroleerd in de originele akten van Het Utrechts Archief en het Regionaal Historisch Centrum Vecht en Venen, via <a href="https://www.openarchieven.nl">Open Archieven</a>. Gegevens over Gijs en Hermanus (1913) komen uit de familiestamboom; akten van na 1966 zijn nog niet openbaar. Geschiedenis: onder meer de <a href="https://www.canonvannederland.nl">Canon van Nederland</a>, de <a href="https://www.proosdijlanden.nl/index.php/publicaties/geschiedenis">Historische Vereniging De Proosdijlanden</a>, het CBS, NIOD en de Nederlandstalige Wikipedia. Waar bronnen elkaar tegenspreken staat dat bij de gebeurtenis. Het volledige onderzoeksverslag met alle bronverwijzingen is bij Gerton op te vragen.</p>
+</footer>
+
+<script>
+/* ===== Voorvaders ===== */
+const GENS = [
+ {id:"g10", gen:10, name:"Jacobus (Cornelisz) van der Wild", alt:null, b:null, bApprox:true, d:1773, dLabel:"vóór 1774", bLabel:"onbekend",
+  place:"Breukeleveen", wife:"(1) Marritje Aelberts, (2) Neeltje Cornelis Heus, getrouwd 1711/12 in Tienhoven", job:"onbekend", prob:true, home:1,
+  story:"In een akte uit 1774 heet Dirk ‘zoon van wijlen Jacobus van der Wild’. De enige Jacobus van der Wild in Breukeleveen die past, is Jacobus Cornelisz. Een akte die dat zwart op wit zegt, is nog niet gevonden; daarom is hij ‘waarschijnlijk’."},
+ {id:"g9", gen:9, name:"Dirk Jacobse van der Wilt", alt:"ook: van der Wild, de Wildt", b:1708, bApprox:true, d:1785, dApprox:true, bLabel:"ca. 1705–1712, Breukeleveen", dLabel:"na 1774",
+  wife:"Geertje Aalbertse, getrouwd 20 januari 1734 in Tienhoven", job:"kleine grondbezitter: hooi-, wei- en turfland", home:1,
+  story:"Kocht in 1758 twee morgen hooi- en weiland en in 1763 driehonderd roeden ‘water- en turfland’: grond die al half plas was. Met zijn broers Jan, Kornelis, Gerrit en Jacob stond hij borg voor elkaars leningen."},
+ {id:"g8", gen:8, name:"Jacob Dirkse van der Wilt", alt:"ook: van der Wild, van der Weld", b:1737, bApprox:true, d:1772, dApprox:true, bLabel:"ca. 1735–1739, Breukeleveen", dLabel:"vóór 2 april 1773, ca. 35 jaar",
+  wife:"Aartje Pieterse Wiggelaar, getrouwd 28 januari 1761 in Tienhoven", job:"niet vermeld; woonde in Breukeleveen", home:1,
+  story:"Zes kinderen werden tussen 1761 en 1770 in Tienhoven gedoopt. Hij stierf jong. In april 1773 werd de erfenis van de kinderen afgekocht, met een boedelbeschrijving die nog gelezen moet worden. Zijn weduwe hertrouwde in 1774."},
+ {id:"g7", gen:7, name:"Jacobus Jacobse van der Wild", alt:"ook: van der Wilt", b:1770, d:1839, bLabel:"maart 1770, Breukeleveen (gedoopt 23 maart, Tienhoven)", dLabel:"17 mei 1839, Tienhoven, huis nr. 33, 69 jaar",
+  wife:"Hendrikje Gerritsdr Bakker uit Oud-Loosdrecht, getrouwd 22 april 1792 in Tienhoven", job:"herbergier (1821), veenman (1839)", home:2,
+  story:"Was nog geen drie toen zijn vader stierf. Zag de Republiek vallen, de Fransen komen en gaan, en werd in 1811 voor het eerst als burger ingeschreven. Hij was de laatste in de lijn die stierf in een wereld zonder trein."},
+ {id:"g6", gen:6, name:"Jacobus van der Wilt", alt:null, b:1793, d:1860, bLabel:"gedoopt 16 juni 1793, Tienhoven", dLabel:"12 juni 1860, Breukelen-Sint Pieters, 67 jaar",
+  wife:"(1) Neeltje de Haan (1795–1836), getrouwd 9 februari 1821; (2) Clasina Maria van Wigge, getrouwd 7 oktober 1837", job:"werkman (1821), veenman (1860)", home:2,
+  story:"Via zijn schoonvader Gijsbert de Haan kwam de naam Gijsbert in de familie. In 1836 bleef hij als weduwnaar achter met een huis vol kinderen. In 1843 zag hij de eerste trein door Breukelen rijden."},
+ {id:"g5", gen:5, name:"Jan van der Wilt", alt:null, b:1834, d:1909, bLabel:"5 augustus 1834, Breukelen-Sint Pieters", dLabel:"16 december 1909, Vinkeveen en Waverveen, 75 jaar",
+  wife:"Catharina Schreurs (1838–1909), dochter van veehouder Hermanus Schreurs, getrouwd 5 april 1860 in Abcoude-Proostdij", job:"veenman", home:3,
+  story:"Verloor zijn moeder toen hij anderhalf was. Tussen 1865 en 1868 begroeven Jan en Catharina vijf zoontjes, van wie drie Hermanus heetten. De vierde Hermanus, geboren in 1874, bleef leven. In 1902, op zijn 68e, stond Jan nog steeds als veenman ingeschreven."},
+ {id:"g4", gen:4, name:"Hermanus van der Wilt", alt:null, b:1874, d:1956, bLabel:"23 mei 1874, Abcoude-Proostdij", dLabel:"4 september 1956, Vinkeveen en Waverveen, 82 jaar",
+  wife:"Dirkje van der Laan (1879–1966) uit Mijdrecht, getrouwd 7 november 1902 in Vinkeveen", job:"arbeider (1902), vervener (1939)", home:4,
+  story:"Op zijn 65e stond hij nog als vervener ingeschreven: vier generaties op hetzelfde veen. In 1917 mocht hij waarschijnlijk voor het eerst stemmen. Hij overleed vier maanden voordat de eerste AOW werd uitbetaald."},
+ {id:"g3", gen:3, name:"Hermanus van der Wilt", alt:null, b:1913, d:1986, bLabel:"27 maart 1913, Vinkeveen en Waverveen", dLabel:"12 oktober 1986, Vinkeveen, 73 jaar, begraven aan de Heerenweg",
+  wife:"Annigje den Hertog (1915–2013) uit Mijdrecht, getrouwd 30 juni 1939 in Vinkeveen en Waverveen", job:"schoenmaker", home:4,
+  story:"De eerste man in de lijn met een ander vak dan het veen. Hij trouwde tien weken voordat de Tweede Wereldoorlog uitbrak. Hij stierf acht dagen nadat koningin Beatrix de Deltawerken voltooid had verklaard."},
+ {id:"g2", gen:2, name:"Gijsbert Adriaan (Gijs) van der Wilt", alt:null, b:1947, d:2016, bLabel:"29 juli 1947, Vinkeveen", dLabel:"26 november 2016, Vinkeveen, 69 jaar, begraven aan de Heerenweg",
+  wife:"Marry (1946), getrouwd 21 november 1967", job:"niet vastgelegd in de akten", home:6, short:"Gijs",
+  story:"Groeide op terwijl de plassen veranderden van turfputten in zandwinning en daarna in watersportgebied. Hij zag Oranje drie WK-finales verliezen en in 1988 Europees kampioen worden. Hij woonde zijn hele leven in Vinkeveen."}
+];
+const SHORT = {g10:"Jacobus", g9:"Dirk", g8:"Jacob", g7:"Jacobus Jacobse", g6:"Jacobus", g5:"Jan", g4:"Hermanus (1874)", g3:"Hermanus (1913)", g2:"Gijs"};
+
+/* ===== Categorieën ===== */
+const CATS = {
+ lokaal:{label:"Vinkeveen en omgeving", v:"--c-lokaal"},
+ vorst:{label:"Wie regeerde", v:"--c-vorst"},
+ oorlog:{label:"Oorlog en politiek", v:"--c-oorlog"},
+ samen:{label:"Ziekte, rampen en samenleving", v:"--c-samen"},
+ techniek:{label:"Techniek", v:"--c-techniek"},
+ lucht:{label:"Luchtvaart", v:"--c-lucht"},
+ oranje:{label:"Oranje", v:"--c-oranje"}
+};
+
+/* ===== Hoofdstukken ===== */
+const CHAPTERS = [
+ {n:0, from:900, to:1699, title:"Voordat de familie verschijnt: veen, dorpen en de eerste turf",
+  intro:"Het land waar de familie zou wonen, was rond het jaar 1000 nog een onbegaanbaar hoogveenmoeras. Vanuit riviertjes als de Winkel, de Waver en de Kromme Mijdrecht groeven boeren sloten het veen in. Zo ontstonden de dorpen en de lange smalle kavels die je nu nog ziet."},
+ {n:1, from:1700, to:1769, title:"Een Republiek zonder stadhouder",
+  intro:"De Republiek was rijk geweest, maar raakte in verval. In Breukeleveen bezat de familie een paar stukken hooi-, wei- en turfland. Het veen werd uitgebaggerd en verkocht als brandstof, vooral voor Amsterdam; wat overbleef was water.",
+  rule:"Van 1702 tot 1747 had Utrecht geen stadhouder: de Staten van Utrecht regeerden. Daarna stadhouder Willem IV, regentes Anna van Hannover, hertog Lodewijk Ernst van Brunswijk als voogd en vanaf 1766 Willem V."},
+ {n:2, from:1770, to:1813, title:"Patriotten, Fransen en een vaste achternaam",
+  intro:"In veertig jaar ging de Republiek ten onder. Er kwamen een Bataafse Republiek, een koning uit Frankrijk en uiteindelijk de inlijving bij het keizerrijk van Napoleon. In 1811 kregen alle inwoners een vaste achternaam en een inschrijving in de burgerlijke stand. Dat is voor stamboomonderzoek een keerpunt: van daarvóór zijn er alleen kerkboeken.",
+  rule:"Stadhouder Willem V (tot 1795). Daarna de Bataafse Republiek, zonder president: vergaderingen en bewinden, vanaf 1805 raadpensionaris Rutger Jan Schimmelpenninck. Koning Lodewijk Napoleon (1806–1810), keizer Napoleon I (1810–1813), en vanaf december 1813 soeverein vorst Willem I."},
+ {n:3, from:1814, to:1859, title:"Een koning, de stoommachine en de cholera",
+  intro:"Nederland werd een koninkrijk. De stoom kwam: in 1839 de eerste trein, in 1843 een station in Breukelen. Tegelijk sloegen de cholera en de aardappelziekte hard toe. In 1841 werden Vinkeveen en Waverveen één gemeente.",
+  rule:"Koning Willem I (1815–1840), koning Willem II (1840–1849), koning Willem III (vanaf 1849).",
+  sky:"Nog niets dan vogels. Af en toe een luchtballon op een kermis."},
+ {n:4, from:1860, to:1913, title:"Telegraaf, telefoon en vijf kleine graven",
+  intro:"Rond Vinkeveen werden de oudere veenplassen drooggemalen; Groot-Mijdrecht kwam rond 1877–1880 droog te liggen, ruim zes meter onder zeeniveau. In de steden kwamen de telefoon en het elektrisch licht. Kindersterfte bleef hoog: rond 1865 werd een man gemiddeld maar 36,5 jaar oud.",
+  rule:"Koning Willem III (tot 1890). Daarna Wilhelmina, tien jaar oud, met koningin Emma als regentes; vanaf 1898 regeerde Wilhelmina zelf.",
+  sky:"Vanaf 1903 bestonden vliegtuigen, maar boven Vinkeveen zag je ze nog niet. Fokker vloog in 1911 met de Spin rond de toren van Haarlem."},
+ {n:5, from:1914, to:1945, title:"Twee wereldoorlogen",
+  intro:"Nederland bleef in 1914 neutraal, maar kreeg te maken met mobilisatie, bonkaarten en de Spaanse griep. In 1915 kwam de trein naar Vinkeveen. Na de crisisjaren volgden vijf jaar Duitse bezetting.",
+  rule:"Koningin Wilhelmina, vanaf mei 1940 in ballingschap in Londen.",
+  sky:"Vanaf 1916 militaire tweedekkers van het nieuwe vliegveld Schiphol, op zo'n vijftien kilometer. In de jaren twintig en dertig de Fokkers van de KLM en vanaf 1934 de glanzende DC-2 en later de DC-3. In de oorlog Duitse toestellen, geallieerde bommenwerpers op weg naar Duitsland en in april en mei 1945 laagvliegende voedseldroppers."},
+ {n:6, from:1946, to:1975, title:"Televisie, aardgas en de laatste turf",
+  intro:"Gijs werd in 1947 geboren in een dorp dat in dertig jaar meer veranderde dan in de twee eeuwen daarvoor. In 1954 werd besloten de Vinkeveense Plassen niet droog te leggen. Daarna zoog Amsterdam er zand uit voor de Bijlmermeer, tot vijftig meter diep. In 1975 werd de laatste turf gestoken.",
+  rule:"Koningin Wilhelmina tot 1948, daarna koningin Juliana. Minister-president Willem Drees (1948–1958), later onder anderen De Quay, Cals, De Jong, Biesheuvel en Den Uyl.",
+  sky:"Eerst viermotorige propellervliegtuigen: DC-4, DC-6, DC-7 en de Lockheed Constellation met haar drie staarten. Vanaf 1960 de straaljagers: de DC-8 van de KLM, Caravelles en Boeing 707's van buitenlandse maatschappijen. Vanaf 1971 de Boeing 747, de jumbo."},
+ {n:7, from:1976, to:2016, title:"De Ronde Venen en een wereld die online ging",
+  intro:"In 1989 hield de gemeente Vinkeveen en Waverveen op te bestaan; Vinkeveen ging op in De Ronde Venen. De plassen werden een watersportgebied met recreatiewoningen op de oude legakkers. In huis kwamen de cd, de pc, internet en de mobiele telefoon.",
+  rule:"Koningin Juliana tot 1980, koningin Beatrix (1980–2013), koning Willem-Alexander vanaf 2013. Minister-presidenten onder anderen Van Agt, Lubbers (1982–1994), Kok, Balkenende en Rutte (vanaf 2010).",
+  sky:"Jumbojets, DC-10's en MD-11's van de KLM. Vanaf 1982 af en toe de Concorde, vanaf 2012 de dubbeldekker A380. Vertrekkend verkeer draait boven De Ronde Venen weg, en in 2019 dienden Vinkeveners 4.210 klachten over vliegtuiggeluid in."},
+ {n:8, from:2017, to:2026, title:"Tien jaar zonder Gijs",
+  intro:"Wat Gijs niet meer heeft meegemaakt.",
+  rule:"Koning Willem-Alexander. Minister-presidenten Rutte (tot 2024), Schoof (2024–2026) en Jetten (vanaf februari 2026).",
+  sky:"In 2021 nam de KLM afscheid van haar laatste Boeing 747."}
+];
+
+/* ===== Gebeurtenissen: [jaar, categorie, label of null, tekst, medium?] ===== */
+const EV = [
+ // vóór 1700, lokaal
+ [953,"lokaal",null,"Keizer Otto I schenkt land aan weerszijden van de Vecht aan de bisschop van Utrecht."],
+ [1000,"lokaal","ca. 1000–1300","Ontginning van het veen. Vanuit riviertjes als de Winkel, de Waver en de Kromme Mijdrecht worden sloten gegraven; zo ontstaan de dorpen en de lange kavels."],
+ [1085,"lokaal",null,"Bisschop Koenraad schenkt de Ronde Venen aan het kapittel van Sint-Jan in Utrecht. Abcoude wordt genoemd als ‘Abecenwalde’. Of de oorkonde echt is, wordt betwijfeld."],
+ [1130,"lokaal","1130–1161","Breukelen wordt genoemd als ‘bruklede’."],
+ [1138,"lokaal",null,"Demmerik, later een deel van Vinkeveen, wordt genoemd als nieuw ontgonnen land."],
+ [1180,"lokaal","ca. 1180","De ontginning van Breukeleveen begint langs de Scheendijk. Hier woonde de familie in de achttiende eeuw."],
+ [1185,"lokaal",null,"Wilnis wordt genoemd als ‘Wildenisse’, wildernis. Sommige bronnen noemen 1085."],
+ [1243,"lokaal",null,"Tienhoven, ‘tien hoeven’, wordt verkocht aan het kapittel van Sint-Pieter in Utrecht."],
+ [1395,"lokaal","1395–1396","Oudst bekende vermelding van ‘Vinkenveen’: Vinkeveen."],
+ [1400,"lokaal","ca. 1400","De eerste windmolens bemalen de Ronde Venen. Het veen klinkt in en het land zakt."],
+ [1530,"lokaal",null,"Volgens de canon van De Proosdijlanden komt de baggerbeugel in gebruik. Daarmee kan veen ook onder water worden opgebaggerd."],
+ [1592,"lokaal",null,"De Staten van Utrecht stellen de eerste regels voor het vervenen vast."],
+ [1604,"lokaal",null,"De hervormde gemeente van Tienhoven wordt opgericht. Ook Breukeleveen hoort erbij; daarom zijn de oudste familiedopen in Tienhoven."],
+ [1663,"samen","1663–1664","De laatste grote pestgolf in Amsterdam: 9.752 doden in 1663 en 24.148 in 1664."],
+ [1672,"oorlog",null,"Rampjaar. Frankrijk, Engeland, Munster en Keulen vallen de Republiek aan. In Waverveen worden 59 huizen verbrand."],
+
+ // 1700–1769
+ [1702,"vorst",null,"Stadhouder-koning Willem III overlijdt. Begin van het tweede stadhouderloze tijdperk: Utrecht wordt bestuurd door de Staten."],
+ [1713,"samen","1713–1720","Runderpest. Voor boeren met koeien in het veen een ramp."],
+ [1734,"lokaal",null,"20 januari: Dirk Jacobse van der Wilt trouwt in Tienhoven met Geertje Aalbertse. Dit is het oudste bewezen moment in de lijn."],
+ [1744,"samen","1744–1764","Tweede grote golf runderpest."],
+ [1745,"lokaal",null,"De naam ‘De Ronde Veenen’ staat op een kaart. In 1989 wordt het de naam van de nieuwe gemeente."],
+ [1747,"vorst","voorjaar 1747","Willem IV wordt stadhouder van alle gewesten, ook van Utrecht. In november wordt het ambt erfelijk."],
+ [1751,"vorst",null,"22 oktober: Willem IV overlijdt. Zijn weduwe Anna van Hannover bestuurt voor hun zoontje."],
+ [1759,"vorst",null,"Anna van Hannover overlijdt. Hertog Lodewijk Ernst van Brunswijk wordt voogd van de jonge Willem V."],
+ [1766,"vorst",null,"8 maart: Willem V wordt achttien en stadhouder."],
+ [1769,"techniek",null,"5 januari: James Watt krijgt patent op zijn verbeterde stoommachine. Het duurt tachtig jaar voordat stoom het veen bereikt."],
+ [1769,"samen","1769–1770","Derde golf runderpest: in Holland sterven 160.228 runderen."],
+
+ // 1770–1813
+ [1773,"lokaal",null,"2 april: de erfenis van de kinderen van de overleden Jacob Dirkse wordt afgekocht. In de akte heet Jacob de ‘zoon’ van Dirk Jacobse."],
+ [1780,"oorlog","1780–1784","Vierde Engelse Oorlog. De Nederlandse handel lijdt zwaar."],
+ [1781,"oorlog",null,"Joan Derk van der Capellen verspreidt het pamflet ‘Aan het volk van Nederland’. Het begin van de Patriottenbeweging."],
+ [1787,"vorst",null,"Prinses Wilhelmina wordt bij Goejanverwellesluis tegengehouden, zo'n 25 km van Breukeleveen. Een Pruisisch leger van ongeveer 20.000 man herstelt Willem V; op 17 september trekt hij Utrecht binnen."],
+ [1795,"vorst",null,"18 januari: Willem V vlucht naar Engeland. Franse troepen komen; de Bataafse Republiek wordt uitgeroepen."],
+ [1796,"oorlog",null,"1 maart: de eerste Nationale Vergadering komt bijeen."],
+ [1798,"oorlog",null,"De Staatsregeling: kerk en staat worden gescheiden. Breukeleveen gaat op in een grote gemeente Breukelen."],
+ [1799,"samen",null,"De eerste proeven met koepokinenting tegen pokken."],
+ [1801,"lokaal",null,"De grote gemeente Breukelen wordt weer opgeheven. Breukeleveen wisselt in twintig jaar vier keer van gemeente; de familie hoefde er niet voor te verhuizen."],
+ [1805,"vorst",null,"Rutger Jan Schimmelpenninck wordt raadpensionaris, het hoofd van de Bataafse Republiek."],
+ [1806,"vorst",null,"5 juni: Lodewijk Napoleon, broer van de keizer, wordt koning van Holland."],
+ [1810,"vorst",null,"Lodewijk Napoleon treedt af. Op 9 juli wordt Nederland ingelijfd bij Frankrijk; keizer Napoleon I regeert."],
+ [1810,"techniek","1810–1813","Een optische telegraaf met seinpalen verbindt Amsterdam met Parijs. Het snelste bericht van het land."],
+ [1811,"samen",null,"1 maart: de burgerlijke stand begint en iedereen moet een vaste achternaam hebben. Jonge mannen worden door loting voor het leger opgeroepen; de zoon Jacobus is dan zeventien."],
+ [1812,"lokaal",null,"1 januari: Breukeleveen wordt bij een grote gemeente Tienhoven gevoegd. Demmerik gaat naar Vinkeveen."],
+ [1813,"vorst",null,"Napoleon is verslagen. Op 2 december aanvaardt Willem I de soevereiniteit."],
+
+ // 1814–1859
+ [1815,"vorst",null,"16 maart: Willem I wordt koning van het Verenigd Koninkrijk der Nederlanden. In juni de slag bij Waterloo."],
+ [1817,"samen",null,"Volgens een oudere bron wordt vaccinatie tegen pokken verplicht."],
+ [1818,"lokaal",null,"Breukeleveen gaat naar de nieuwe gemeente Breukelen-Sint Pieters."],
+ [1819,"lokaal",null,"Waverveen gaat van Holland over naar de provincie Utrecht. Bronnen noemen 1819 of 1820."],
+ [1830,"oorlog",null,"De Belgische Opstand. Het leger blijft negen jaar gemobiliseerd; pas in 1839 erkent Nederland België."],
+ [1832,"samen",null,"De cholera bereikt Nederland via Scheveningen: meer dan 10.000 doden. In hetzelfde jaar krijgt Tienhoven de poldermolen De Trouwe Waghter, die er nog steeds staat."],
+ [1839,"techniek",null,"20 september: de eerste trein van Nederland rijdt van Amsterdam naar Haarlem. Vier maanden eerder was Jacobus Jacobse overleden. Hetzelfde jaar wordt de fotografie (daguerreotypie) uitgevonden."],
+ [1840,"vorst",null,"7 oktober: Willem II wordt koning."],
+ [1841,"lokaal",null,"1 januari: Vinkeveen en Waverveen worden één gemeente. Die bestaat tot 1989."],
+ [1843,"techniek",null,"18 december: station Breukelen opent aan de lijn Amsterdam–Utrecht."],
+ [1844,"techniek",null,"Samuel Morse opent de eerste telegraaflijn in Amerika (24 mei)."],
+ [1845,"techniek",null,"De eerste Nederlandse elektrische telegraaf, langs het spoor Amsterdam–Haarlem."],
+ [1845,"samen",null,"De aardappelziekte bereikt Nederland. Arbeiders die van hun eigen aardappels leven, krijgen honger; duizenden emigreren naar Amerika."],
+ [1848,"oorlog",null,"De grondwet van Thorbecke. Alleen rijke mannen mogen stemmen; een werkman als Jacobus niet."],
+ [1849,"vorst",null,"17 maart: Willem III wordt koning."],
+ [1849,"samen",null,"Tweede cholera-epidemie: ongeveer 22.000 doden. Vinkeveen en Waverveen telt dan 1.915 inwoners."],
+ [1849,"techniek","1849–1852","Stoomgemalen, waaronder de Cruquius, malen de Haarlemmermeer droog."],
+ [1852,"techniek",null,"1 december: iedereen kan voortaan een telegram sturen via de Rijkstelegraaf."],
+ [1852,"lokaal",null,"De Eerste Bedijking bij Vinkeveen valt droog: een uitgeveende plas wordt weer land."],
+
+ // 1860–1913
+ [1863,"samen",null,"1 juli: de slavernij in Suriname en op de Antillen wordt afgeschaft. In Indië was dat in 1860 gebeurd."],
+ [1866,"samen",null,"Derde cholera-epidemie: ongeveer 21.000 doden, vooral rond Amsterdam. In juli overlijdt Jans zoontje Jacobus, vier jaar oud; de oorzaak staat niet in de akte."],
+ [1870,"lokaal",null,"7 maart: concessie voor de drooglegging van Groot-Mijdrecht, de plas aan de westkant van Vinkeveen. Het stoomgemaal legt hem tegen 1880 droog."],
+ [1874,"samen",null,"Het Kinderwetje van Van Houten verbiedt fabriekswerk onder de twaalf jaar, maar werk op het land en in het veen valt erbuiten."],
+ [1876,"techniek",null,"7 maart: Alexander Graham Bell krijgt patent op de telefoon."],
+ [1877,"samen","1877–1895","Landbouwcrisis door goedkoop graan uit Amerika en Rusland."],
+ [1879,"techniek",null,"Thomas Edison laat zijn gloeilamp branden (oktober)."],
+ [1881,"techniek",null,"1 juni: de eerste telefooncentrale van Nederland opent in Amsterdam, met 49 abonnees."],
+ [1883,"lokaal",null,"De katholieke Heilig Hartkerk in Vinkeveen wordt gebouwd (1880–1883)."],
+ [1886,"techniek",null,"19 april: in Kinderdijk opent de eerste openbare elektriciteitscentrale van Nederland. Karl Benz bouwt in Duitsland de eerste auto (1885–1886)."],
+ [1887,"lokaal",null,"De provincie geeft toestemming om de Vinkeveense Plassen droog te leggen. Het gebeurt nooit."],
+ [1890,"vorst",null,"23 november: Willem III overlijdt. Wilhelmina is tien; haar moeder Emma wordt regentes."],
+ [1891,"techniek",null,"Philips begint in Eindhoven gloeilampen te maken."],
+ [1895,"lokaal",null,"De eerste turfmachine komt in gebruik. Tot dan was alles handwerk."],
+ [1898,"vorst",null,"31 augustus: Wilhelmina wordt achttien en regeert zelf."],
+ [1899,"lokaal",null,"Vinkeveen en Waverveen telt 3.767 inwoners."],
+ [1901,"samen",null,"Leerplicht voor kinderen van 6 tot 12, aangenomen met 50 tegen 49 stemmen."],
+ [1901,"techniek",null,"12 december: Marconi stuurt een radiosignaal over de Atlantische Oceaan."],
+ [1903,"lucht",null,"17 december: de gebroeders Wright maken de eerste gemotoriseerde vlucht."],
+ [1908,"oranje",null,"Olympische Spelen in Londen: Nederland wint brons, met een 2-0 zege op Zweden.","alleen de krant"],
+ [1911,"lucht",null,"Anthony Fokker vliegt met zijn ‘Spin’ rond de kerktoren van Haarlem (31 augustus of 1 september)."],
+ [1912,"oranje",null,"Olympische Spelen in Stockholm: weer brons, 9-0 tegen Finland. Jan Vos scoort vijf keer.","alleen de krant"],
+
+ // 1914–1945
+ [1914,"oorlog",null,"De Eerste Wereldoorlog. Nederland blijft neutraal maar mobiliseert. Meer dan een miljoen Belgische vluchtelingen steken de grens over."],
+ [1915,"lokaal",null,"De Haarlemmermeerspoorlijn bereikt Vinkeveen (de lokale canon noemt 1916). Voor reizigers rijdt hij tot 1950."],
+ [1916,"lucht",null,"19 september: Schiphol opent als militair vliegveld, zo'n vijftien kilometer van Vinkeveen."],
+ [1916,"samen",null,"Januari: de Zuiderzee overstroomt; 51 doden. Het leidt tot de Zuiderzeewerken."],
+ [1917,"oorlog",null,"Algemeen kiesrecht voor mannen. Hermanus (1874) mag waarschijnlijk voor het eerst stemmen. Aardappeloproer in Amsterdam (1917–1918)."],
+ [1918,"samen",null,"De Spaanse griep: in 1918–1919 sterven in Nederland tussen de 32.000 en 40.000 mensen."],
+ [1919,"oorlog",null,"Vrouwenkiesrecht. Dirkje van der Laan stemt in 1922 voor het eerst."],
+ [1919,"techniek",null,"6 november: Idzerda zendt vanuit Den Haag het eerste Nederlandse radioprogramma uit."],
+ [1919,"lucht",null,"7 oktober: de KLM wordt opgericht. Op 17 mei 1920 landt de eerste KLM-vlucht, uit Londen, op Schiphol."],
+ [1920,"oranje",null,"Olympische Spelen in Antwerpen: derde keer brons.","alleen de krant"],
+ [1923,"techniek",null,"De omroep in Hilversum begint. De radio komt de huiskamer in."],
+ [1924,"lucht",null,"De Fokker F.VII komt bij de KLM in dienst."],
+ [1926,"lokaal",null,"De Wilnisse Plas wordt drooggelegd. Het vervenen in Mijdrecht en Wilnis is dan bijna voorbij."],
+ [1928,"oranje",null,"11 maart: Han Hollander doet het eerste live radioverslag van een Nederlandse voetbalwedstrijd. In mei speelt Oranje op de Olympische Spelen in Amsterdam en verliest met 0-2 van Uruguay.","radio"],
+ [1928,"techniek",null,"Alexander Fleming ontdekt penicilline."],
+ [1930,"samen","1930–1936","De crisisjaren. De werkloosheid stijgt van ongeveer 150.000 in 1930 tot ongeveer 600.000 in 1935. In september 1936 laat Nederland de gouden standaard los."],
+ [1933,"techniek",null,"In Duitsland begint de eerste telexdienst ter wereld. Wanneer de Nederlandse PTT volgde, is niet gevonden."],
+ [1934,"lucht",null,"Oktober: de KLM-DC-2 ‘Uiver’ wint de handicaprace Londen–Melbourne. Vanaf 1936 vliegt de KLM met de DC-3."],
+ [1934,"oranje",null,"WK in Italië: Oranje verliest in de eerste ronde met 3-2 van Zwitserland, in Milaan. Of de Nederlandse radio het uitzond, is niet bevestigd.","radio?"],
+ [1938,"oranje",null,"WK in Frankrijk: 3-0 verlies na verlenging tegen Tsjecho-Slowakije, in Le Havre.","radio?"],
+ [1939,"lokaal",null,"30 juni: Hermanus (1913), schoenmaker, trouwt met Annigje den Hertog. Zijn vader staat in de akte nog als vervener."],
+ [1940,"oorlog",null,"10 mei: Duitsland valt Nederland aan. Schiphol wordt gebombardeerd en wordt een Duitse vliegbasis."],
+ [1940,"oorlog","1940–1945","Meer dan 100.000 Joodse Nederlanders worden weggevoerd en vermoord. Mannen van 17 tot 50 worden opgepakt voor dwangarbeid in Duitsland; Hermanus (1913) valt in die leeftijdsgroep."],
+ [1941,"lucht",null,"13 mei: een Duitse Junkers Ju 88 stort neer in de Vinkeveense Plassen."],
+ [1941,"lokaal",null,"1 mei: Abcoude-Proostdij en Abcoude-Baambrugge worden samen de gemeente Abcoude."],
+ [1943,"lucht",null,"13 december: het zwaarste geallieerde bombardement op Schiphol."],
+ [1943,"oranje",null,"9 juli: radioverslaggever Han Hollander wordt vermoord in Sobibór."],
+ [1944,"oorlog","1944–1945","De Hongerwinter in het westen: naar schatting 16.000 tot meer dan 22.000 hongerdoden. Het station van Breukelen wordt deels verwoest door een bom."],
+ [1945,"lucht",null,"29 april tot 8 mei: voedseldroppingen. Lancasters en B-17's vliegen laag over; B-17's werpen voedsel af op Schiphol zelf."],
+ [1945,"lokaal",null,"5 mei: zes verzetsstrijders van de Binnenlandse Strijdkrachten sneuvelen bij een vuurgevecht met Duitse troepen in Vinkeveen. Het monument aan de Herenweg, van Cephas Stauthamer, wordt op 4 mei 1948 onthuld en draagt acht namen."],
+ [1945,"oorlog",null,"5 mei: Nederland is bevrijd."],
+
+ // 1946–1975
+ [1946,"techniek",null,"In Amerika wordt de ENIAC gepresenteerd, een van de eerste elektronische computers."],
+ [1946,"lucht",null,"De Lockheed Constellation komt bij de KLM. Op 8 juli 1945 was het eerste vliegtuig na de oorlog op Schiphol geland, een DC-3."],
+ [1947,"samen",null,"De Noodwet Ouderdomsvoorziening van Drees gaat in. Vinkeveen en Waverveen telt 5.022 inwoners. Op 29 juli wordt Gijs geboren."],
+ [1946,"oorlog","1945–1949","Strijd in Indonesië: meer dan 200.000 Nederlandse militairen, van wie ruim de helft dienstplichtig. Op 27 december 1949 wordt Indonesië soeverein."],
+ [1948,"vorst",null,"4 september: Juliana wordt koningin. Willem Drees wordt minister-president (tot 1958)."],
+ [1949,"lokaal",null,"1 januari: Breukelen-Sint Pieters en Breukelen-Nijenrode worden samen Breukelen."],
+ [1950,"lucht",null,"De Aalsmeerbaan op Schiphol opent."],
+ [1950,"oorlog",null,"23 november: de eerste 636 Nederlandse militairen landen in Korea."],
+ [1951,"techniek",null,"2 oktober: de eerste Nederlandse televisie-uitzending, vanuit Bussum. Er zijn dan ongeveer 500 toestellen."],
+ [1952,"techniek",null,"De ARRA, de eerste Nederlandse computer, wordt in Amsterdam gedemonstreerd."],
+ [1952,"oranje",null,"14 mei: Nederland–Zweden (0-0) is waarschijnlijk de eerste voetbalwedstrijd op de Nederlandse televisie.","zwart-wit-tv"],
+ [1953,"samen",null,"1 februari: de Watersnoodramp in Zeeland, Zuid-Holland en Brabant: 1.836 doden."],
+ [1954,"lokaal",null,"De provincie besluit de Vinkeveense Plassen en Botshol niet droog te leggen."],
+ [1954,"lucht",null,"15 juli: het prototype van de Boeing 707 (de 367-80) vliegt voor het eerst. De echte 707 volgt op 20 december 1957."],
+ [1957,"samen",null,"2 januari: de eerste AOW wordt uitbetaald, vier maanden na de dood van Hermanus (1874)."],
+ [1957,"oorlog",null,"25 maart: Nederland tekent het Verdrag van Rome, het begin van de Europese Economische Gemeenschap."],
+ [1957,"lokaal",null,"Amsterdam krijgt toestemming om zand te zuigen uit de Vinkeveense Plassen, eerst tot 30 meter diep. Op 1 juli gaat Tienhoven op in Maarssen."],
+ [1958,"samen",null,"8 mei: de Deltawet. De Deltawerken duren tot 1997."],
+ [1959,"techniek",null,"22 juli: aardgas gevonden bij Slochteren. Vanaf 1963 wordt het gewonnen; binnen tien jaar kookt en stookt bijna heel Nederland op gas. Turf als brandstof is voorbij."],
+ [1960,"lucht",null,"De DC-8 wordt het eerste straalvliegtuig van de KLM. De Kaagbaan opent."],
+ [1960,"techniek",null,"29% van de Nederlanders van 12 jaar en ouder kan tv kijken. In 1966 heeft ongeveer driekwart van de huishoudens een toestel. Er zijn 41 auto's per 1.000 inwoners."],
+ [1962,"oorlog",null,"Oktober: de Cubacrisis. De wereld staat op de rand van een kernoorlog."],
+ [1963,"techniek",null,"Philips introduceert het cassettebandje."],
+ [1967,"lucht",null,"28 april: koningin Juliana opent het nieuwe stationsgebouw van Schiphol. De Buitenveldertbaan opent (1967), de Zwanenburgbaan volgt in 1968."],
+ [1967,"techniek",null,"21 september: de eerste kleurentelevisie-uitzending in Nederland."],
+ [1967,"lokaal",null,"21 november: Gijs trouwt met Marry."],
+ [1968,"lokaal",null,"Amsterdam mag tot 50 meter diep zand zuigen. De gemeente Vinkeveen en Waverveen gaat in beroep."],
+ [1969,"lucht",null,"9 februari: de Boeing 747 vliegt voor het eerst. 2 maart: de Concorde."],
+ [1969,"techniek",null,"20 juli: de eerste mensen op de maan. Hetzelfde jaar wordt Gerton geboren. De kerncentrale Dodewaard levert stroom (1968–1969)."],
+ [1970,"techniek",null,"153 auto's per 1.000 inwoners, bijna vier keer zoveel als in 1960."],
+ [1971,"lucht",null,"De KLM krijgt haar eerste Boeing 747, de jumbojet. In 1972 volgt de DC-10."],
+ [1973,"techniek",null,"Juli: de kerncentrale Borssele wordt aangesloten op het net."],
+ [1974,"oranje",null,"WK in West-Duitsland: Oranje van Rinus Michels en Johan Cruijff verliest op 7 juli de finale in München met 2-1. Er werd in kleur uitgezonden, maar de meeste gezinnen keken waarschijnlijk nog zwart-wit.","tv, meestal zwart-wit"],
+ [1975,"lokaal",null,"De laatste turf in Vinkeveen wordt gestoken. Volgens De Proosdijlanden was ‘de laatste veenbaas, J. van der Wilt’ toen nog aan het werk. Welke J. van der Wilt dat was, moet nog worden uitgezocht."],
+ [1975,"lokaal",null,"12 augustus: zandeiland 8 stort in de zandput. In 1976 stopt de zandwinning, na ongeveer 40 miljoen kubieke meter."],
+
+ // 1976–2016
+ [1976,"oranje",null,"EK in Joegoslavië: Oranje wordt derde.","kleuren-tv"],
+ [1978,"oranje",null,"WK in Argentinië: op 25 juni verliest Oranje van Ernst Happel de finale in Buenos Aires met 3-1 na verlenging. Rensenbrink raakt in de laatste minuut de paal. 61% van de huishoudens heeft dan kleuren-tv.","kleuren-tv"],
+ [1980,"vorst",null,"30 april: Beatrix wordt koningin. Vinkeveen en Waverveen telt 8.598 inwoners."],
+ [1980,"techniek",null,"De PTT opent het autotelefoonnet ATF-1. In 1981 komt de IBM-pc op de markt; er zijn 300 auto's per 1.000 inwoners."],
+ [1980,"oranje",null,"EK in Italië: Oranje strandt in de groepsfase.","kleuren-tv"],
+ [1982,"lucht",null,"27 februari: de Concorde landt voor het eerst op Schiphol."],
+ [1983,"techniek",null,"De cd komt in Europa in de winkel (in Japan al in oktober 1982), een uitvinding van Philips en Sony."],
+ [1986,"samen",null,"4 oktober: koningin Beatrix opent de Oosterscheldekering: ‘De Deltawerken zijn voltooid.’ Acht dagen later overlijdt Hermanus (1913)."],
+ [1988,"oranje",null,"EK in West-Duitsland: Oranje wordt Europees kampioen. Op 25 juni wint het de finale tegen de Sovjet-Unie met 2-0, met doelpunten van Gullit en Van Basten. Bij de huldiging in Amsterdam zinken woonboten door de drukte.","kleuren-tv"],
+ [1988,"techniek",null,"17 november: het CWI in Amsterdam wordt een van de eerste instellingen buiten Amerika met een internetverbinding."],
+ [1988,"lokaal",null,"15 september: de Herindelingswet Utrecht-West wordt aangenomen."],
+ [1989,"lokaal",null,"1 januari: Mijdrecht, Wilnis en Vinkeveen en Waverveen worden samen de gemeente De Ronde Venen. De naam werd gekozen zodat geen dorp boven de andere werd gesteld. Breukeleveen gaat naar Loosdrecht, in Noord-Holland."],
+ [1989,"oorlog",null,"9 november: de Berlijnse Muur valt. In hetzelfde jaar stelt Tim Berners-Lee het World Wide Web voor."],
+ [1990,"oranje",null,"WK in Italië: uitgeschakeld in de achtste finale door West-Duitsland (2-1).","kleuren-tv"],
+ [1992,"oranje",null,"EK in Zweden: halve finale, verloren na strafschoppen tegen Denemarken.","kleuren-tv"],
+ [1993,"techniek",null,"Particulieren kunnen thuis internet krijgen. De KLM vliegt met de MD-11."],
+ [1994,"techniek",null,"1 juli: het eerste Nederlandse GSM-netwerk. De mobiele telefoon wordt gewoon."],
+ [1994,"oranje",null,"WK in de Verenigde Staten: kwartfinale, 3-2 verlies tegen Brazilië.","kleuren-tv"],
+ [1996,"oranje",null,"EK in Engeland: kwartfinale, verloren na strafschoppen tegen Frankrijk.","kleuren-tv"],
+ [1998,"oranje",null,"WK in Frankrijk: Oranje wordt vierde. De halve finale tegen Brazilië trekt 11,7 miljoen kijkers, toen een record.","kleuren-tv"],
+ [1998,"techniek",null,"59% van de huishoudens heeft een pc, maar pas 16% heeft internet. In 2008 is dat 86%."],
+ [2000,"oranje",null,"EK in Nederland en België: in de halve finale verliest Oranje in Amsterdam na strafschoppen van Italië.","kleuren-tv"],
+ [2001,"oorlog",null,"11 september: aanslagen in de Verenigde Staten, 2.977 doden."],
+ [2002,"samen",null,"1 januari: de euro vervangt de gulden. Gijs is 54."],
+ [2002,"lokaal",null,"Loosdrecht, met Breukeleveen, wordt onderdeel van Wijdemeren."],
+ [2003,"lucht",null,"De Polderbaan, de zesde baan van Schiphol, opent."],
+ [2004,"oranje",null,"EK in Portugal: halve finale, 2-1 verlies tegen Portugal.","kleuren-tv"],
+ [2006,"oranje",null,"WK in Duitsland: achtste finale, 1-0 verlies tegen Portugal.","kleuren-tv"],
+ [2007,"techniek",null,"De iPhone verschijnt; de smartphone begint."],
+ [2008,"oorlog",null,"De kredietcrisis. Op 3 oktober koopt de Staat Fortis Nederland, met zijn deel van ABN AMRO, voor 16,8 miljard euro."],
+ [2008,"oranje",null,"EK in Oostenrijk en Zwitserland: kwartfinale, verloren na verlenging tegen Rusland. De NOS zendt alle wedstrijden ook live uit via internet.","tv en internet"],
+ [2010,"oranje",null,"WK in Zuid-Afrika: op 11 juli verliest Oranje van Bert van Marwijk de finale in Johannesburg met 1-0 na verlenging tegen Spanje. Thuis keken 8,5 miljoen mensen; met cafés en pleinen erbij ruim 12 miljoen.","tv en internet"],
+ [2010,"vorst",null,"Mark Rutte wordt minister-president (tot 2024)."],
+ [2011,"lokaal",null,"1 januari: Abcoude, met de oude Proostdij, gaat op in De Ronde Venen. Breukelen, Loenen en Maarssen (met Tienhoven) worden Stichtse Vecht."],
+ [2012,"lucht",null,"1 augustus: de eerste lijnvlucht met de Airbus A380, van Emirates, op Schiphol."],
+ [2012,"oranje",null,"EK in Polen en Oekraïne: drie nederlagen in de groepsfase.","tv en internet"],
+ [2013,"vorst",null,"30 april: Willem-Alexander wordt koning."],
+ [2014,"oorlog",null,"17 juli: vlucht MH17 wordt boven Oekraïne neergeschoten; 298 doden, van wie het grootste deel Nederlands was."],
+ [2014,"oranje",null,"WK in Brazilië: Oranje van Louis van Gaal wordt derde, met 3-0 tegen Brazilië. De halve finale tegen Argentinië is met 9,1 miljoen thuiskijkers de best bekeken uitzending ooit in Nederland.","tv en internet"],
+ [2016,"oorlog",null,"6 april: bij het Oekraïne-referendum stemt 61,1% tegen. Op 23 juni stemt het Verenigd Koninkrijk voor de Brexit."],
+ [2016,"samen",null,"26 november: Gijs overlijdt in Vinkeveen, 69 jaar oud."],
+
+ // 2017–2026
+ [2019,"lucht",null,"Vinkeveners dienen 4.210 klachten in over vliegtuiggeluid, het meeste van De Ronde Venen."],
+ [2020,"samen",null,"27 februari: de eerste coronabesmetting in Nederland, in Tilburg. Half maart volgt de ‘intelligente lockdown’."],
+ [2021,"lucht",null,"De KLM neemt afscheid van haar laatste Boeing 747."],
+ [2021,"oranje",null,"EK, verspreid over Europa met wedstrijden in Amsterdam: achtste finale, 2-0 verlies tegen Tsjechië.","tv en streaming"],
+ [2022,"oorlog",null,"24 februari: Rusland valt Oekraïne binnen."],
+ [2022,"techniek",null,"30 november: ChatGPT verschijnt. Kunstmatige intelligentie komt in ieders handen."],
+ [2022,"oranje",null,"WK in Qatar: kwartfinale, verloren na strafschoppen tegen Argentinië.","tv en streaming"],
+ [2024,"vorst",null,"Dick Schoof wordt minister-president."],
+ [2024,"samen",null,"De levensverwachting is 80,5 jaar voor mannen, tegen 36,5 rond 1865."],
+ [2024,"oranje",null,"EK in Duitsland: halve finale, op 10 juli 2-1 verlies tegen Engeland in Dortmund.","tv en streaming"],
+ [2025,"oorlog",null,"29 oktober: Tweede Kamerverkiezingen; D66 en PVV halen allebei 26 zetels."],
+ [2026,"vorst",null,"Februari: Rob Jetten wordt minister-president."],
+ [2026,"oranje",null,"WK in de Verenigde Staten, Canada en Mexico: Oranje wint groep F, maar gaat op 29 juni in de laatste 32 na strafschoppen uit tegen Marokko, in Monterrey. Het was 3 uur 's nachts in Nederland.","tv en streaming"]
+];
+
+/* ===== Hulpfuncties ===== */
+const el = (t, a={}, h="") => { const e=document.createElement(t); for(const k in a) e.setAttribute(k,a[k]); if(h) e.innerHTML=h; return e; };
+const alive = (g,y) => g.b!==null && y>=g.b && y<=g.d;
+function agesAt(y){
+  return GENS.filter(g=>alive(g,y)).sort((a,b)=>a.b-b.b)
+    .map(g=>`${SHORT[g.id]} ${g.bApprox?"±":""}${y-g.b}`);
+}
+
+/* ===== Veenprofiel (hero) ===== */
+(function strata(){
+  const svg=document.getElementById("strata");
+  const W=1000, rowH=30, gap=6, top=8, x0=1690, x1=2026;
+  const rows=GENS.slice().reverse(); // Gijs bovenaan
+  const H=top+rows.length*(rowH+gap)+30;
+  svg.setAttribute("viewBox",`0 0 ${W} ${H}`);
+  const sx=y=>((y-x0)/(x1-x0))*W;
+  let s="";
+  rows.forEach((g,i)=>{
+    const y=top+i*(rowH+gap);
+    const b=g.b ?? 1690, d=g.d;
+    const fill=`hsl(${30-i*1.5} ${38-i}% ${64-i*4.2}%)`;
+    const STRL={g10:"?–vóór 1774", g9:"ca. 1708–na 1774", g8:"ca. 1737–vóór 1773"};
+    const label=`${SHORT[g.id]}, ${STRL[g.id]||g.b+"–"+d}`;
+    const w=Math.max(sx(d)-sx(b),40);
+    const tx = sx(b)+w>W-300 ? sx(b)-8 : sx(b)+w+8;
+    const anchor = sx(b)+w>W-300 ? "end" : "start";
+    s+=`<g class="bar" tabindex="0" role="link" aria-label="${g.name}" data-id="${g.id}">
+      <rect x="${sx(b)}" y="${y}" width="${w}" height="${rowH}" rx="2" fill="${fill}" ${g.prob?'stroke="#C9B9A6" stroke-dasharray="4 3"':''}/>
+      <text x="${tx}" y="${y+rowH/2+5}" font-size="15" text-anchor="${anchor}">${label}</text></g>`;
+  });
+  const ay=top+rows.length*(rowH+gap)+4;
+  s+=`<g class="axis"><line x1="0" x2="${W}" y1="${ay}" y2="${ay}"/>`;
+  for(let y=1700;y<=2000;y+=50){ s+=`<line x1="${sx(y)}" x2="${sx(y)}" y1="${ay}" y2="${ay+6}"/><text x="${sx(y)}" y="${ay+20}" text-anchor="middle">${y}</text>`; }
+  s+=`</g>`;
+  svg.innerHTML=s;
+  svg.querySelectorAll(".bar").forEach(b=>{
+    const go=()=>document.getElementById(b.dataset.id)?.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});
+    b.addEventListener("click",go);
+    b.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){e.preventDefault();go();} });
+  });
+})();
+
+/* ===== Filters ===== */
+let active = new Set(Object.keys(CATS));
+try{ const s=JSON.parse(localStorage.getItem("vdw-filters")); if(Array.isArray(s)&&s.length) active=new Set(s.filter(k=>CATS[k])); }catch(e){}
+const fbar=document.getElementById("filters");
+for(const k in CATS){
+  const b=el("button",{class:"chip",type:"button","aria-pressed":active.has(k)?"true":"false",style:`--cc:var(${CATS[k].v})`},CATS[k].label);
+  b.addEventListener("click",()=>{
+    active.has(k)?active.delete(k):active.add(k);
+    b.setAttribute("aria-pressed",active.has(k)?"true":"false");
+    try{ localStorage.setItem("vdw-filters",JSON.stringify([...active])); }catch(e){}
+    applyFilter();
+  });
+  fbar.appendChild(b);
+}
+function applyFilter(){
+  document.querySelectorAll(".ev").forEach(li=>li.classList.toggle("hidden",!active.has(li.dataset.cat)));
+  document.querySelectorAll(".events").forEach(ul=>{
+    const any=[...ul.children].some(li=>!li.classList.contains("hidden"));
+    ul.nextElementSibling.style.display=any?"none":"block";
+  });
+}
+
+/* ===== Hoofdstukken opbouwen ===== */
+const main=document.getElementById("main");
+function card(g){
+  const c=el("article",{class:"card",id:g.id});
+  c.innerHTML=`<div class="gen">Generatie ${g.gen} ${g.prob?'<span class="badge prob">waarschijnlijk</span>':'<span class="badge">bewezen in akten</span>'}</div>
+   <h3>${g.name}${g.alt?`<span class="alt">${g.alt}</span>`:""}</h3>
+   <dl class="facts"><dt>Geboren</dt><dd>${g.bLabel}</dd><dt>Overleden</dt><dd>${g.dLabel}</dd><dt>Vrouw</dt><dd>${g.wife}</dd><dt>Beroep</dt><dd>${g.job}</dd></dl>
+   <p>${g.story}</p>`;
+  if(g.id==="g2") c.innerHTML+=`<p class="memo">Gegevens uit de familiestamboom. Overheidsakten van zo kort geleden zijn nog niet openbaar.</p>`;
+  return c;
+}
+CHAPTERS.forEach(ch=>{
+  const sec=el("section",{class:"chapter","aria-labelledby":"ch"+ch.n});
+  const yrs = ch.n===0 ? "tot 1700" : `${ch.from} tot ${ch.to}`;
+  sec.innerHTML=`<div class="ch-head"><div class="ch-years">${yrs}</div><h2 id="ch${ch.n}">${ch.title}</h2><p class="ch-intro">${ch.intro}</p></div>`;
+  const grid=el("div",{class:"ch-grid"});
+  const left=el("div",{class:"gen-col"});
+  // voorvaders
+  GENS.forEach(g=>{
+    if(g.home===ch.n){ left.appendChild(card(g)); return; }
+    const b=g.b ?? 1680;
+    if(g.d>=ch.from && b<=ch.to && ch.n>0){
+      const a1=Math.max(ch.from,b)-b, a2=Math.min(ch.to,g.d)-b;
+      const m=el("a",{class:"mini",href:"#"+g.id});
+      m.innerHTML=`<b>${SHORT[g.id]}</b><span>${g.bApprox?"±":""}${a1} tot ${a2} jaar</span>`;
+      left.appendChild(m);
+    }
+  });
+  if(ch.n===0) left.appendChild(el("p",{class:"memo"},"De oudste voorvader in de akten verschijnt rond 1711. Deze periode gaat over het land en de dorpen waar zij zouden wonen."));
+  if(ch.n===8) left.appendChild(el("p",{class:"memo"},"Gijs is er niet meer bij. Zijn naam leeft voort in de plassen, de dorpen en deze pagina."));
+  if(ch.rule) left.appendChild(el("div",{class:"side-box"},`<h4>Wie regeerde</h4><p>${ch.rule}</p>`));
+  if(ch.sky) { const s=el("div",{class:"side-box sky"},`<h4>In de lucht boven Vinkeveen</h4><p>${ch.sky}</p>`); left.appendChild(s); }
+  // gebeurtenissen
+  const right=el("div");
+  const ul=el("ol",{class:"events"});
+  EV.filter(e=>e[0]>=ch.from && e[0]<=ch.to).sort((a,b)=>a[0]-b[0]).forEach(e=>{
+    const [y,c,lab,txt,med]=e;
+    const li=el("li",{class:"ev","data-cat":c,style:`--cc:var(${CATS[c].v})`});
+    const ages=agesAt(y);
+    li.innerHTML=`<span class="yr">${lab||y}</span><span class="cat">${CATS[c].label}</span>
+      <p class="txt">${txt}</p>${med?`<span class="medium">Te volgen via: ${med}</span>`:""}
+      ${ages.length?`<div class="ages">Leeftijd toen: ${ages.join(", ")}</div>`:""}`;
+    ul.appendChild(li);
+  });
+  right.appendChild(ul);
+  right.appendChild(el("p",{class:"empty"},"Geen gebeurtenissen in deze periode voor de gekozen onderwerpen."));
+  grid.append(left,right);
+  sec.appendChild(grid);
+  main.appendChild(sec);
+});
+applyFilter();
+</script>
+</body>
+</html>
