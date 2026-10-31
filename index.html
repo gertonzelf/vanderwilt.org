@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>welkom</title>
+<style>
+  body {
+    margin: 0;
+    background: #202020;
+    font-family: "Courier New", Courier, monospace;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    padding: 20px 10px;
+  }
+  .wrap { display: flex; gap: 40px; align-items: flex-start; max-width: 1100px; width: 100%; }
+  .screen { flex: 1; min-width: 0; }
+  .header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 10px; }
+  .logo { color: #fff; font-size: 14px; }
+  .logo .blue { background: #0000ff; color: #fff; padding: 2px 10px; letter-spacing: 8px; display: inline-block; }
+  .pagenr { color: #0f0; font-size: 20px; }
+  .pagenr span { color: #ff0; }
+  .title { font-size: 22px; margin: 14px 0 6px; color: #0ff; letter-spacing: 3px; }
+  .line { font-size: 20px; white-space: pre; line-height: 1.45; }
+  .cy { color: #0ff; }
+  .yl { color: #ff0; }
+  .gr { color: #0f0; }
+  .rd { color: #f00; }
+  .wt { color: #fff; }
+  .bar { background: #0000ff; color: #fff; font-size: 18px; padding: 4px 8px; margin-top: 14px; white-space: pre; }
+  .footer { margin-top: 12px; font-size: 18px; white-space: pre; }
+  .footer .rd { margin-right: 20px; }
+  .footer .gr { margin-right: 30px; }
+  .footer .yl { margin-right: 30px; }
+  .keys { width: 180px; }
+  .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .key {
+    background: #333; color: #fff; text-align: center; padding: 14px 0;
+    font-size: 14px; font-family: Arial, sans-serif; cursor: pointer; user-select: none;
+  }
+  .key:hover { background: #444; }
+  .display {
+    background: #fff; color: #000; text-align: center; padding: 10px;
+    font-size: 20px; grid-column: span 2; font-family: Arial, sans-serif;
+  }
+  .fav { margin-top: 28px; color: #aaa; font-family: Arial, sans-serif; font-size: 12px; letter-spacing: 2px; }
+  .favitem { background: #333; color: #fff; padding: 12px 10px; margin-top: 6px; font-family: Arial, sans-serif; font-size: 13px; cursor: pointer; }
+  .favitem:hover { background: #444; }
+  .note { color: #888; font-size: 12px; margin-top: 16px; font-family: Arial, sans-serif; }
+  @media (max-width: 800px) {
+    .wrap { flex-direction: column; }
+    .line, .footer, .bar { font-size: 14px; }
+    .title { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="screen" id="screen"></div>
+  <div class="keys">
+    <div class="keypad">
+      <div class="key" onclick="goHome()">&#8962;</div>
+      <div class="display" id="display">100</div>
+      <div class="key" onclick="goPage(parseInt(document.getElementById('display').textContent)||100)">OK</div>
+      <div class="key" onclick="prevPage()">&laquo;</div>
+      <div class="key" onclick="prevPage()">&lsaquo;</div>
+      <div class="key" onclick="nextPage()">&rsaquo;</div>
+      <div class="key" onclick="nextPage()">&raquo;</div>
+      <div class="key" onclick="press('1')">1</div>
+      <div class="key" onclick="press('2')">2</div>
+      <div class="key" onclick="press('3')">3</div>
+      <div class="key" onclick="press('4')">4</div>
+      <div class="key" onclick="press('5')">5</div>
+      <div class="key" onclick="press('6')">6</div>
+      <div class="key" onclick="press('7')">7</div>
+      <div class="key" onclick="press('8')">8</div>
+      <div class="key" onclick="press('9')">9</div>
+      <div class="key" onclick="clearInput()">&#9003;</div>
+      <div class="key" onclick="press('0')">0</div>
+      <div class="key" onclick="clearInput()">C</div>
+    </div>
+    <div class="fav">FAVORIETEN</div>
+    <div class="favitem" onclick="goPage(101)">101 &middot; Start</div>
+    <div class="favitem" onclick="goPage(200)">200 &middot; Vluchten</div>
+    <div class="favitem" onclick="goPage(300)">300 &middot; Helikopters</div>
+    <div class="favitem" onclick="goPage(400)">400 &middot; Vliegvelden</div>
+  </div>
+</div>
+
+<script>
+  // Alle pagina's zijn fictief, bedoeld als leuke teletekst-stijl voor luchtvaartfans.
+  const pages = {
+    101: {
+      header: null,
+      lines: [
+        ["cy", "Welkom op Vliegteletekst",            "yl", "101"],
+        ["cy", "Nieuws over vliegtuigen en luchthavens", "yl", "102"],
+        ["cy", "Vluchten vandaag per luchthaven",     "yl", "200"],
+        ["cy", "Helikopters in Nederland",            "yl", "300"],
+        ["cy", "Vliegvelden in Nederland",            "yl", "400"],
+        ["cy", "Spotter-agenda en evenementen",       "yl", "500"],
+        ["cy", "Weer en zicht op de luchthavens",     "yl", "600"],
+        ["cy", "Verkeersinformatie en files",         "yl", "700"]
+      ]
+    },
+    102: {
+      lines: [
+        ["cy", "Nieuws uit de luchtvaart",            "yl", "110"],
+        ["cy", "Nieuwe Boeing 737 MAX op Schiphol",   "yl", "111"],
+        ["cy", "Vliegtuig van KLM terug uit onderhoud","yl", "112"],
+        ["cy", "Mooi zicht op Polderbaan vanaf dijk", "yl", "113"],
+        ["cy", "Spotters verzamelen bij Eindhoven",   "yl", "114"],
+        ["cy", "Rotterdam The Hague: nieuwe vlucht",  "yl", "115"]
+      ]
+    },
+    110: {
+      lines: [
+        ["wt", "Een Airbus A330 landde vanochtend op Schiphol na een rustige vlucht uit Montreal."],
+        ["wt", "Passagiers meldden een prachtige zonsopkomst boven het IJsselmeer."],
+        ["wt", "Spotters zagen dit weekend opvallend veel Embraer-toestellen bij Lelystad."]
+      ]
+    },
+    200: {
+      header: "VLUCHTEN VANDAAG - SCHIPHOL (AMS)",
+      lines: [
+        ["cy", "08:15  KL1005  Amsterdam - Londen      ", "yl", "Op tijd"],
+        ["cy", "08:40  HV4421  Amsterdam - Milaan      ", "gr", "Geland"],
+        ["cy", "09:05  TK1958  Amsterdam - Istanbul    ", "yl", "Op tijd"],
+        ["cy", "09:30  EZY318  Amsterdam - Malaga      ", "rd", "Vertraagd"],
+        ["cy", "10:00  KL0643  Amsterdam - New York    ", "yl", "Op tijd"],
+        ["cy", "10:25  U25801  Amsterdam - Berlijn     ", "gr", "Vertrokken"],
+        ["cy", "11:10  BA0812  Amsterdam - Heathrow    ", "yl", "Op tijd"]
+      ],
+      footer: "Vluchtnummers zijn fictief en bedoeld als demonstratie."
+    },
+    300: {
+      header: "HELIKOPTERS IN NEDERLAND",
+      lines: [
+        ["cy", "PH-HVA  Eurocopter EC135  Rotterdam    ", "gr", "Actief"],
+        ["cy", "PH-KLM  Bell 429         Den Helder    ", "yl", "Gestald"],
+        ["cy", "PH-NOS  Airbus H145      Groningen     ", "gr", "Actief"],
+        ["cy", "PH-SAR  Sikorsky S-76    Terschelling  ", "yl", "Standby"],
+        ["cy", "PH-AMB  Airbus H135      Utrecht       ", "gr", "Actief"]
+      ],
+      footer: "Ambulance- en reddingshelikopters zijn 24 uur per dag paraat."
+    },
+    400: {
+      header: "VLIEGVELDEN IN NEDERLAND",
+      lines: [
+        ["cy", "AMS  Schiphol          Amsterdam     ", "gr", "Internationaal"],
+        ["cy", "RTM  Rotterdam The Hague Rotterdam   ", "gr", "Internationaal"],
+        ["cy", "EIN  Eindhoven         Eindhoven     ", "gr", "Internationaal"],
+        ["cy", "GRQ  Groningen Eelde   Groningen     ", "yl", "Regionaal"],
+        ["cy", "MST  Maastricht        Maastricht    ", "yl", "Regionaal"],
+        ["cy", "LEY  Lelystad          Lelystad      ", "yl", "Regionaal"]
+      ],
+      footer: "Tip voor spotters: Schiphol heeft de beste zichtlijnen vanaf het Polderdak."
+    },
+    500: {
+      header: "SPOTTER-AGENDA",
+      lines: [
+        ["cy", "Zaterdag  Spotterdag Lelystad        ", "yl", "10:00"],
+        ["cy", "Zondag    Airshow Eindhoven          ", "yl", "12:00"],
+        ["cy", "Vrijdag   Lezing luchtvaarthistorie  ", "yl", "19:30"]
+      ]
+    },
+    600: {
+      header: "WEER EN ZICHT - LUCHTHAVENS",
+      lines: [
+        ["cy", "Schiphol     Zicht 10 km   Wind 240 @ 12 kt", "gr", "Goed"],
+        ["cy", "Eindhoven    Zicht 8 km    Wind 220 @ 10 kt", "gr", "Goed"],
+        ["cy", "Groningen    Zicht 4 km    Wind 260 @ 15 kt", "yl", "Matig"]
+      ]
+    },
+    700: {
+      header: "VERKEER EN FILES",
+      lines: [
+        ["cy", "A4 richting Schiphol   Vertraging 10 min", "yl", "Let op"],
+        ["cy", "A2 bij Utrecht         Geen problemen   ", "gr", "Normaal"]
+      ]
+    }
+  };
+
+  let current = 101;
+  let inputValue = "";
+
+  function render(num) {
+    const p = pages[num];
+    const screen = document.getElementById("screen");
+    if (!p) {
+      screen.innerHTML =
+        '<div class="header"><div class="logo"><span class="blue">WELKOM</span></div>' +
+        '<div class="pagenr">NOS <span>' + num + '</span></div></div>' +
+        '<div class="title">Pagina niet gevonden</div>' +
+        '<div class="line wt">Voer een ander paginanummer in of kies er een van de favorieten.</div>';
+      return;
+    }
+
+    let html = "";
+    if (num === 101) {
+      html += '<div class="header"><div class="logo"><span class="blue">VLIEGTELETEKST</span></div>' +
+              '<div class="pagenr">Landingsbaan <span>' + num + '</span></div></div>';
+    } else {
+      html += '<div class="header"><div class="logo"><span class="blue">VLIEGTELETEKST</span></div>' +
+              '<div class="pagenr">Landingsbaan <span>' + num + '</span></div></div>';
+    }
+
+    if (p.header) html += '<div class="title">' + p.header + '</div>';
+
+    p.lines.forEach(function (l) {
+      if (l.length === 2) {
+        html += '<div class="line ' + l[0] + '">' + l[1] + '</div>';
+      } else {
+        html += '<div class="line"><span class="' + l[0] + '">' + l[1] + '</span>' +
+                '<span class="' + l[2] + '">' + l[3] + '</span></div>';
+      }
+    });
+
+    if (p.footer) html += '<div class="note">' + p.footer + '</div>';
+
+    html += '<div class="bar">nieuws 102 &middot; vluchten 200 &middot; helikopters 300 &middot; vliegvelden 400</div>';
+    html += '<div class="footer"><span class="rd">luchthaven</span><span class="gr">vlucht</span><span class="yl">helikopter</span><span class="cy">weer</span></div>';
+
+    screen.innerHTML = html;
+    current = num;
+    document.getElementById("display").textContent = "";
+    inputValue = "";
+  }
+
+  function goPage(n) { render(n); }
+  function goHome() { render(101); }
+  function prevPage() { render(current > 101 ? current - 1 : 101); }
+  function nextPage() { render(current + 1); }
+
+  function press(d) {
+    if (inputValue.length >= 3) inputValue = "";
+    inputValue += d;
+    document.getElementById("display").textContent = inputValue;
+    if (inputValue.length === 3) {
+      setTimeout(function () { render(parseInt(inputValue, 10)); }, 300);
+    }
+  }
+  function clearInput() {
+    inputValue = "";
+    document.getElementById("display").textContent = "";
+  }
+
+  render(101);
+</script>
+</body>
+</html>
