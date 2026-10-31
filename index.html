@@ -82,6 +82,7 @@
     </div>
     <div class="fav">FAVORIETEN</div>
     <div class="favitem" onclick="goPage(101)">101 &middot; Start</div>
+    <div class="favitem" onclick="goPage(102)">102 &middot; In herinnering: Gijs</div>
     <div class="favitem" onclick="goPage(200)">200 &middot; Vluchten</div>
     <div class="favitem" onclick="goPage(300)">300 &middot; Helikopters</div>
     <div class="favitem" onclick="goPage(400)">400 &middot; Vliegvelden</div>
@@ -95,7 +96,8 @@
       header: null,
       lines: [
         ["cy", "Welkom op Vliegteletekst",            "yl", "101"],
-        ["cy", "Nieuws over vliegtuigen en luchthavens", "yl", "102"],
+        ["cy", "In herinnering: Gijs van der Wilt",   "yl", "102"],
+        ["cy", "Nieuws over vliegtuigen en luchthavens", "yl", "103"],
         ["cy", "Vluchten vandaag per luchthaven",     "yl", "200"],
         ["cy", "Helikopters in Nederland",            "yl", "300"],
         ["cy", "Vliegvelden in Nederland",            "yl", "400"],
@@ -104,9 +106,9 @@
         ["cy", "Verkeersinformatie en files",         "yl", "700"]
       ]
     },
-    102: {
+    103: {
       lines: [
-        ["cy", "Nieuws uit de luchtvaart",            "yl", "110"],
+        ["cy", "Nieuws uit de luchtvaart",           "yl", "110"],
         ["cy", "Nieuwe Boeing 737 MAX op Schiphol",   "yl", "111"],
         ["cy", "Vliegtuig van KLM terug uit onderhoud","yl", "112"],
         ["cy", "Mooi zicht op Polderbaan vanaf dijk", "yl", "113"],
@@ -182,10 +184,14 @@
     }
   };
 
+  // Pagina's die naar een los HTML-bestand gaan in plaats van een teletekstscherm.
+  const LINKS = { 102: "gedenkpagina/index.html" };
+
   let current = 101;
   let inputValue = "";
 
   function render(num) {
+    if (LINKS[num]) { window.location.href = LINKS[num]; return; }
     const p = pages[num];
     const screen = document.getElementById("screen");
     if (!p) {
@@ -219,7 +225,7 @@
 
     if (p.footer) html += '<div class="note">' + p.footer + '</div>';
 
-    html += '<div class="bar">nieuws 102 &middot; vluchten 200 &middot; helikopters 300 &middot; vliegvelden 400</div>';
+    html += '<div class="bar">nieuws 103 &middot; vluchten 200 &middot; helikopters 300 &middot; vliegvelden 400</div>';
     html += '<div class="footer"><span class="rd">luchthaven</span><span class="gr">vlucht</span><span class="yl">helikopter</span><span class="cy">weer</span></div>';
 
     screen.innerHTML = html;
@@ -245,6 +251,18 @@
     inputValue = "";
     document.getElementById("display").textContent = "";
   }
+
+  // Paginanummer ook met het toetsenbord intoetsen.
+  document.addEventListener("keydown", function (e) {
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    if (/^[0-9]$/.test(e.key)) { press(e.key); }
+    else if (e.key === "Backspace" || e.key === "Escape") { clearInput(); }
+    else if (e.key === "Home") { goHome(); }
+    else if (e.key === "ArrowLeft") { prevPage(); }
+    else if (e.key === "ArrowRight") { nextPage(); }
+    else return;
+    e.preventDefault();
+  });
 
   render(101);
 </script>
